@@ -42,11 +42,26 @@ function fileToArray(icsInfo) {
 
 function mondayTimes() {
   for (var i in timing) {
-    // console.log(timetable[i][0]);
     if (timing[i][0].includes("MO")) {
       mondayTimetable.push([timing[i][1], timing[i][2]]);
-      // console.log(timing[i][0]);
     }
   }
   console.table(mondayTimetable);
+  for (var i in mondayTimetable) {
+    for (var j in mondayTimetable[i]) {
+      mondayTimetable[i][j] = parseInt(mondayTimetable[i][j]);
+    }
+  }
+  console.table(mondayTimetable);
+  mondayTimetable.sort(sortFunction);
+  console.table(mondayTimetable);
+}
+
+function sortFunction(a, b) {
+  if (a[0] === b[0]) {
+      return 0;
+  }
+  else {
+      return (a[0] < b[0]) ? -1 : 1;
+  }
 }

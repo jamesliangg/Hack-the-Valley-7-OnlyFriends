@@ -13,9 +13,9 @@ function readFile(input) {
   let fileReader = new FileReader();
   fileReader.readAsText(file);
   fileReader.onload = function() {
-    //var fileStuff = fileReader.result;
+    alert(fileReader.result);
     //return fileStuff;
-    console.log(fileReader.results);
+
   };
   fileReader.onerror = function() {
     alert(fileReader.error);

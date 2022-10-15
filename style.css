@@ -1,12 +1,11 @@
 .home_page {
   height: 500px;
+<!DOCTYPE html><html><head><link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" /></head><body><div class="v1_5"><div class="v1_11"></div><div class="v1_13"></div><div class="v1_15"></div><div class="v1_17"></div><span class="v1_18">Calendar</span></div></body></html> <br/><br/> <style>* {
+  box-sizing: border-box;
+
+home_page {
+  background: url("apple_background.JPG");
   width: 100%;
-  text-align: center;
-  background-color: black;
-  background-image: url("apple_background.JPG");
-
+  height: 832px;
 }
-
-.logo {
-  margin-top: 0px;
-}
+</style> 

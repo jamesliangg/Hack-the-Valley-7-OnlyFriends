@@ -1,4 +1,5 @@
 var timing = new Array;
+var mondayTimetable = new Array;
 
 function readFile(input) {
   let file = input.files[0];
@@ -36,4 +37,16 @@ function fileToArray(icsInfo) {
     }
   }
   console.table(timing);
+  // mondayTimes(timing);
+}
+
+function mondayTimes() {
+  for (var i in timing) {
+    // console.log(timetable[i][0]);
+    if (timing[i][0].includes("MO")) {
+      mondayTimetable.push([timing[i][1], timing[i][2]]);
+      // console.log(timing[i][0]);
+    }
+  }
+  console.table(mondayTimetable);
 }

@@ -1,13 +1,9 @@
-//  var input = document.getElementById("userInput").value;
-//  alert(input);
-
 function readFile(input) {
   let file = input.files[0];
   let fileReader = new FileReader();
   fileReader.readAsText(file);
   fileReader.onload = function() {
-    alert(fileReader.result);
-    // return fileStuff;
+    // alert(fileReader.result);
     fileToArray(fileReader.result);
   };
   fileReader.onerror = function() {
@@ -17,28 +13,26 @@ function readFile(input) {
 
 function fileToArray(icsInfo) {
   var icsArray = icsInfo.split("\n");
-  //console.log(icsArray[0]);
   var course = 0;
-  var timing = [];
+  var timing = new Array;
   for (var i in icsArray) {
     if (icsArray[i].includes("DTSTART;TZID")) {
       icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1,icsArray[i].length);
-      timing[course] = icsArray[i];
       course++;
-      console.log(icsArray[i]);
+      var startTime = icsArray[i];
     }
-    if (icsArray[i].includes("DTEND;TZID")) {
+    else if (icsArray[i].includes("DTEND;TZID")) {
       icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1,icsArray[i].length);
-      timing[course] = icsArray[i];
       course++;
-      console.log(icsArray[i]);
+      var endTime = icsArray[i];
     }
-    if (icsArray[i].includes("RRULE:FREQ=WEEKLY")) {
+    else if (icsArray[i].includes("RRULE:FREQ=WEEKLY")) {
       icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("=") + 1,icsArray[i].length);
-      timing[course] = icsArray[i];
       course++;
-      console.log(icsArray[i]);
+      var weekday = icsArray[i];
+      console.log(weekday + " " + startTime + " " + endTime);
+      timing.push([weekday, startTime, endTime]);
     }
   }
+  console.table(timing);
 }
-

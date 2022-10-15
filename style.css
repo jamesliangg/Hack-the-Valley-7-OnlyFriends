@@ -2,8 +2,11 @@
   height: 500px;
   width: 100%;
   text-align: center;
+  background-color: black;
+  background-image: url("apple_background.JPG");
 }
 
 .logo {
-  max-width: 50%;
+ display: block;
+  margin-left: auto;
 }

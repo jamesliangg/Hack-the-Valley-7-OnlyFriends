@@ -55,6 +55,12 @@ function mondayTimes() {
   console.table(mondayTimetable);
   mondayTimetable.sort(sortFunction);
   console.table(mondayTimetable);
+
+  for (var i = 0; i < mondayTimetable.length - 1; i++) {
+    if ((mondayTimetable[i+1][0] - mondayTimetable[i][1]) > 0) {
+      console.log("There is a " + (mondayTimetable[i+1][0] - mondayTimetable[i][1])/100 + " minute break between " + mondayTimetable[i][1] + " to " + mondayTimetable[i+1][0]);
+    }
+  }
 }
 
 function sortFunction(a, b) {

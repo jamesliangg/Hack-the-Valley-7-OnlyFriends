@@ -53,21 +53,34 @@ function mondayTimes() {
     }
   }
   console.table(mondayTimetable);
+  mondayTimetable.push([000000, 000000]);
+  mondayTimetable.push([240000, 240000]);
   mondayTimetable.sort(sortFunction);
   console.table(mondayTimetable);
 
   for (var i = 0; i < mondayTimetable.length - 1; i++) {
     if ((mondayTimetable[i+1][0] - mondayTimetable[i][1]) > 0) {
-      console.log("There is a " + (mondayTimetable[i+1][0] - mondayTimetable[i][1])/100 + " minute break between " + mondayTimetable[i][1] + " to " + mondayTimetable[i+1][0]);
+      
+      console.log("There is a " + timeDifference(mondayTimetable[i][1], mondayTimetable[i+1][0]) + " minute break between " + mondayTimetable[i][1] + " to " + mondayTimetable[i+1][0]);
     }
   }
 }
 
 function sortFunction(a, b) {
   if (a[0] === b[0]) {
-      return 0;
+    return 0;
   }
   else {
-      return (a[0] < b[0]) ? -1 : 1;
+    return (a[0] < b[0]) ? -1 : 1;
   }
+}
+
+function timeDifference(firstTime, secondTime) {
+  var adjustedFirstHours = Math.floor(firstTime/10000);
+  // console.log(adjustedFirstHours);
+  var adjustedSecondHours = Math.floor(secondTime/10000);
+  // console.log(adjustedSecondHours);
+  var minutesFirstTime = (firstTime/100 - adjustedFirstHours*100) + adjustedFirstHours*60;
+  var minutesSecondTime = (secondTime/100 - adjustedSecondHours*100) + adjustedSecondHours*60;
+  return minutesSecondTime - minutesFirstTime;
 }

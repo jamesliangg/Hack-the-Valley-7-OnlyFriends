@@ -1,7 +1,7 @@
 ![logo](logo.png)
 
 # OnlyFriends
-Project for Hack the Valley VI - In Progress
+Project for Hack the Valley VII
 
 ## Inspiration
 Comparing timetables with other students has become tedious, especially when groups get larger. We wanted to create a program to find collective breaks to lessen the complexity of hanging out with your friends, even those out of town. Everyone needs a break to socialize sometimes.

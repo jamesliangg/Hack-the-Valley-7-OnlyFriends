@@ -224,10 +224,11 @@ body {
   cursor: pointer;
 }
 .test{
-  width: 300px;
-  height: 110px;
-  text-align: centre;
-  position: fixed
+  width: 600px;
+  height: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   overflow: scroll;
   overflow-x: hidden;
 }

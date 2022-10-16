@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
+  
+
 <head>
   <link rel="stylesheet" type="text/css" href="style.css" />
   <title>OnlyFriends</title>
 </head>
+
+
+  
 
 <body>
 
@@ -19,10 +24,18 @@
     <!--website header logo-->
     <img src="logo.png" class="logo" class="bk" alt="logo isnt working">
 
+    <h2 class="text">
+      Gain control and organize your life
+    </h2>
+    
     <!--move buttom later-->
     <p style="text-align:center;">
-      <input onchange="readFile(this)" type="file" accept=".ics">
-      <button onclick="sortCourses()">Calculate!</button>
+      <input onchange="readFile(this)" id="file" type="file" accept=".ics">
+     
+      
+      <button onclick="sortCourses()">Discover!</button>
+   <button type="input" onclick="setSize()">Set Size</button>
+      
     </p>
 
   </div>
@@ -30,6 +43,94 @@
 
 
   <script type="text/javascript" src="backend.js"></script>
+
+
+
+
+  <div class="container">
+    <div class="title">Fall Semester</div>
+    <div class="days">
+      <div class="filler"></div>
+      <div class="filler"></div>
+      <div class="day">Mon</div>
+      <div class="day">Tue</div>
+      <div class="day">Wed</div>
+      <div class="day">Thu</div>
+      <div class="day">Fri</div>
+      <div class="day">Sat</div>
+      <div class="day">Sun</div>
+    </div>
+    <div class="content">
+      <div class="time" style="grid-row:1">01:00</div>
+      <div class="time" style="grid-row:2">02:00</div>
+      <div class="time" style="grid-row:3">03:00</div>
+      <div class="time" style="grid-row:4">04:00</div>
+      <div class="time" style="grid-row:5">05:00</div>
+      <div class="time" style="grid-row:6">06:00</div>
+      <div class="time" style="grid-row:7">07:00</div>
+      <div class="time" style="grid-row:8">08:00</div>
+      <div class="time" style="grid-row:9">09:00</div>
+      <div class="time" style="grid-row:10">10:00</div>
+      <div class="time" style="grid-row:11">11:00</div>
+      <div class="time" style="grid-row:12">12:00</div>
+      <div class="time" style="grid-row:13">13:00</div>
+      <div class="time" style="grid-row:14">14:00</div>
+      <div class="time" style="grid-row:15">15:00</div>
+      <div class="time" style="grid-row:16">16:00</div>
+      <div class="time" style="grid-row:17">17:00</div>
+      <div class="time" style="grid-row:18">18:00</div>
+      <div class="time" style="grid-row:19">19:00</div>
+      <div class="time" style="grid-row:20">20:00</div>
+      <div class="time" style="grid-row:21">21:00</div>
+      <div class="time" style="grid-row:22">22:00</div>
+      <div class="time" style="grid-row:23">23:00</div>
+      <div class="filler-col"></div>
+      <div class="col" style="grid-column:3"></div>
+      <div class="col" style="grid-column:4"></div>
+      <div class="col" style="grid-column:5"></div>
+      <div class="col" style="grid-column:6"></div>
+      <div class="col" style="grid-column:7"></div>
+      <div class="col weekend" style="grid-column:8"></div>
+      <div class="col weekend" style="grid-column:9"></div>
+      <div class="row" style="grid-row:1"></div>
+      <div class="row" style="grid-row:2"></div>
+      <div class="row" style="grid-row:3"></div>
+      <div class="row" style="grid-row:4"></div>
+      <div class="row" style="grid-row:5"></div>
+      <div class="row" style="grid-row:6"></div>
+      <div class="row" style="grid-row:7"></div>
+      <div class="row" style="grid-row:8"></div>
+      <div class="row" style="grid-row:9"></div>
+      <div class="row" style="grid-row:10"></div>
+      <div class="row" style="grid-row:11"></div>
+      <div class="row" style="grid-row:12"></div>
+      <div class="row" style="grid-row:13"></div>
+      <div class="row" style="grid-row:14"></div>
+      <div class="row" style="grid-row:15"></div>
+      <div class="row" style="grid-row:16"></div>
+      <div class="row" style="grid-row:17"></div>
+      <div class="row" style="grid-row:18"></div>
+      <div class="row" style="grid-row:19"></div>
+      <div class="row" style="grid-row:20"></div>
+      <div class="row" style="grid-row:21"></div>
+      <div class="row" style="grid-row:22"></div>
+      <div class="row" style="grid-row:23"></div>
+
+      <div class="event event1 calendar1">Event 1</div>
+      <div class="event event2 calendar2">Event 2</div>
+      <div class="event event3 calendar2">Event 3</div>
+      <div class="event event4 calendar1">Event 4</div>
+      <div class="current-time">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  
 </body>
+
 
 </html>

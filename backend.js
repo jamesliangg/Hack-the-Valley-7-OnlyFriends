@@ -1,3 +1,5 @@
+
+
 var timing = new Array;
 var mondayTimetable = new Array;
 var tuesdayTimetable = new Array;
@@ -108,3 +110,12 @@ function timeDifference(firstTime, secondTime) {
   var minutesSecondTime = (secondTime/100 - adjustedSecondHours*100) + adjustedSecondHours*60;
   return minutesSecondTime - minutesFirstTime;
 }
+
+
+
+var store = document.querySelector(':root');
+var rootStyles = getComputeredStyle(root);
+var event1 = rootStyles.getPropertyValue('--event-1');
+console.log('vale: ', event1);
+
+setSize(4);

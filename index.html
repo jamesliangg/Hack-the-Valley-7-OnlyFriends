@@ -1,52 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  
-
 <head>
   <link rel="stylesheet" type="text/css" href="style.css" />
   <title>OnlyFriends</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 
-
-  
-
 <body>
-
-  <script type="text/javascript" src="backend.js">
-  </script>
-
-
-
+  <script type="text/javascript" src="backend.js"> </script>
   <!--the front page-->
   <div class="home_page">
-
     <!--website header logo-->
     <img src="logo.png" class="logo" class="bk" alt="logo isnt working">
-
-    <h2 class="text">
-      Every plan has a story.
-    </h2>
-    
-    <!--move buttom later-->
+    <h2 class="text">Every Plan Has a Story</h2>
+    <!--move button later-->
     <p style="text-align:center;">
       <input onchange="readFile(this)" id="file" type="file" class="customfile" accept=".ics">
-     
-      
       <button onclick="sortCourses()" class="discover">Discover!</button>
-   <!--<button type="input" onclick="setSize()" class="set_size">Set Size</button>-->
-      
+    <details open>
+      <summary style="text-align:center;">Instant Breakdown</summary>
+      <p style="text-align:center;" id="demo" class="test"></p>
+    </details>
     </p>
-
   </div>
-
-
-
-  <script type="text/javascript" src="backend.js"></script>
-
-
-
 
   <div class="container">
     <div class="title">Fall Semester</div>
@@ -126,12 +103,10 @@
       </div>
     </div>
   </div>
-
-
-
-
-  
 </body>
-
-
+<!--Unskippable music
+<audio controls autoplay>
+    <source src="ChillBeats.mp3" type="audio/mp3">
+</audio>
+  -->
 </html>

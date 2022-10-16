@@ -5,7 +5,9 @@ var wednesdayTimetable = new Array;
 var thursdayTimetable = new Array;
 var fridayTimetable = new Array;
 var weekdays = ["MO", "TU", "WE", "TH", "FR"];
+var breakdown = "";
 
+//Reading file
 function readFile(input) {
   let file = input.files[0];
   let fileReader = new FileReader();
@@ -121,12 +123,15 @@ function sortTables(timetable) {
 
 function findBreaks(timetable, weekday) {
   console.table(timetable);
+  console.log(weekday);
+  breakdown = breakdown + "<br>" + weekday;
   for (var i = 0; i < timetable.length - 1; i++) {
-    console.log(weekday);
     if ((timetable[i + 1][0] - timetable[i][1]) > 0) {
+      breakdown = breakdown + "<br>" + ("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
       console.log("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
     }
   }
+  document.getElementById("demo").innerHTML = breakdown;
 }
 
 function sortFunction(a, b) {
@@ -146,11 +151,11 @@ function timeDifference(firstTime, secondTime) {
   return minutesSecondTime - minutesFirstTime;
 }
 
-document.documentElement.style.setProperty('--event-1-column', 7);
-document.documentElement.style.setProperty('--event-2-column', 3);
-document.documentElement.style.setProperty('--event-3-column', 4);
-document.documentElement.style.setProperty('--event-4-column', 6);
-document.documentElement.style.setProperty('--event-5-column', 7);
-document.documentElement.style.setProperty('--event-6-column', 3);
-document.documentElement.style.setProperty('--event-7-column', 4);
-document.documentElement.style.setProperty('--event-8-column', 6);
+// document.documentElement.style.setProperty('--event-1-column', 7);
+// document.documentElement.style.setProperty('--event-2-column', 3);
+// document.documentElement.style.setProperty('--event-3-column', 4);
+// document.documentElement.style.setProperty('--event-4-column', 6);
+// document.documentElement.style.setProperty('--event-5-column', 7);
+// document.documentElement.style.setProperty('--event-6-column', 3);
+// document.documentElement.style.setProperty('--event-7-column', 4);
+// document.documentElement.style.setProperty('--event-8-column', 6);

@@ -1,19 +1,9 @@
-<!DOCTYPE html><html><head><link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" /></head><body><div class="v1_5"><div class="v1_11"></div><div class="v1_13"></div><div class="v1_15"></div><div class="v1_17"></div><span class="v1_18">Calendar</span></div></body></html> <br/><br/> <style>* {
-  box-sizing: border-box;}
+<!DOCTYPE html><html><head><link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" /></head><body><div class="v1_5"><div class="v1_11"></div><div class="v1_13"></div><div class="v1_15"></div><div class="v1_17"></div><span class="v1_18">Calendar</span></div></body></html> <br/><br/> <style>* { box-sizing: border-box;}
 
 <style>
 html,body
-{
-
-
-    padding: 0px;
-
-}
-* {
-  margin: 0;
-  border: 0;
-  box-sizing: border-box;
-}
+{padding: 0px;}
+* {margin: 0; border: 0; box-sizing: border-box;}
 
 .logo{
   display: block;
@@ -24,7 +14,7 @@ html,body
 
 .text{
   color: white;
-text-align: center;
+  text-align: center;
   margin-bottom: 100px;
 }
 
@@ -134,7 +124,6 @@ body {
   border-color: #2892ab;
 }*/
 
-
 .event1 {
   grid-column: var(--event-1-column);
   grid-row: 9/span 4;
@@ -192,10 +181,6 @@ body {
   --event-2-column:4;
   --event-3-column:3;
   --event-4-column:6;
-  --event-5column:4;
-  --event-6-column:4;
-  --event-7-column:3;
-  --event-8-column:6;
 }
 
 .customfile{
@@ -238,4 +223,8 @@ body {
   font-size: 15px;
   cursor: pointer;
 }
-
+.test{
+  width: 110px;
+  height: 110px;
+  overflow: scroll;
+}

@@ -1,4 +1,4 @@
-![logo.png](Logo)
+![logo](logo.png)
 
 # OnlyFriends
 Project for Hack the Valley VI - In Progress

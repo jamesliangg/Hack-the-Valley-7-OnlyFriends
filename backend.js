@@ -1,5 +1,10 @@
 var timing = new Array;
 var mondayTimetable = new Array;
+var tuesdayTimetable = new Array;
+var wednesdayTimetable = new Array;
+var thursdayTimetable = new Array;
+var fridayTimetable = new Array;
+var weekdays = ["MO", "TU", "WE", "TH", "FR"];
 
 function readFile(input) {
   let file = input.files[0];
@@ -37,31 +42,50 @@ function fileToArray(icsInfo) {
     }
   }
   console.table(timing);
-  // mondayTimes(timing);
 }
 
-function mondayTimes() {
+function sortCourses() {
   for (var i in timing) {
     if (timing[i][0].includes("MO")) {
       mondayTimetable.push([timing[i][1], timing[i][2]]);
     }
-  }
-  console.table(mondayTimetable);
-  for (var i in mondayTimetable) {
-    for (var j in mondayTimetable[i]) {
-      mondayTimetable[i][j] = parseInt(mondayTimetable[i][j]);
+    if (timing[i][0].includes("TU")) {
+      tuesdayTimetable.push([timing[i][1], timing[i][2]]);
+    }
+    if (timing[i][0].includes("WE")) {
+      wednesdayTimetable.push([timing[i][1], timing[i][2]]);
+    }
+    if (timing[i][0].includes("TH")) {
+      thursdayTimetable.push([timing[i][1], timing[i][2]]);
+    }
+    if (timing[i][0].includes("FR")) {
+      fridayTimetable.push([timing[i][1], timing[i][2]]);
     }
   }
-  console.table(mondayTimetable);
-  mondayTimetable.push([000000, 000000]);
-  mondayTimetable.push([240000, 240000]);
-  mondayTimetable.sort(sortFunction);
-  console.table(mondayTimetable);
+  findBreaks(sortTables(mondayTimetable), "Monday");
+  findBreaks(sortTables(tuesdayTimetable), "Tuesday");
+  findBreaks(sortTables(wednesdayTimetable), "Wednesday");
+  findBreaks(sortTables(thursdayTimetable), "Thursday");
+  findBreaks(sortTables(fridayTimetable), "Friday");
+}
 
-  for (var i = 0; i < mondayTimetable.length - 1; i++) {
-    if ((mondayTimetable[i+1][0] - mondayTimetable[i][1]) > 0) {
-      
-      console.log("There is a " + timeDifference(mondayTimetable[i][1], mondayTimetable[i+1][0]) + " minute break between " + mondayTimetable[i][1] + " to " + mondayTimetable[i+1][0]);
+function sortTables(timetable) {
+  for (var i in timetable) {
+    for (var j in timetable[i]) {
+      timetable[i][j] = parseInt(timetable[i][j]);
+    }
+  }
+  timetable.push([000000, 000000]);
+  timetable.push([240000, 240000]);
+  timetable.sort(sortFunction);
+  return timetable
+}
+
+function findBreaks(timetable, weekday) {
+  for (var i = 0; i < timetable.length - 1; i++) {
+    console.log(weekday);
+    if ((timetable[i+1][0] - timetable[i][1]) > 0) {
+      console.log("There is a " + timeDifference(timetable[i][1], timetable[i+1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i+1][0]);
     }
   }
 }

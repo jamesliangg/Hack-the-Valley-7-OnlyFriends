@@ -33,7 +33,14 @@ We used HTML and CSS for the frontend and JavaScript for the backend. The HTML b
 - Utilizing different APIs to suggest movies, games, and events to do during the breaks
 - Replacing calendar with Google Calendar or similar
 - Add support for more universities
+- Potential addition of compatibility with personal events
+- Instructions for how to use program
 
 ## Credits
 Kjell Magne Fauske - Calendar Template
 https://codepen.io/kjellmf/pen/qgxyVJ
+
+## Known Issues
+- Calendar isn't updating with break times
+- Courses with same start time will incorrectly calculate break times
+- Clicking "Discover!" multiple times will duplicate information

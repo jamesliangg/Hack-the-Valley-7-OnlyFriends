@@ -151,11 +151,34 @@ function timeDifference(firstTime, secondTime) {
   return minutesSecondTime - minutesFirstTime;
 }
 
-// document.documentElement.style.setProperty('--event-1-column', 7);
-// document.documentElement.style.setProperty('--event-2-column', 3);
-// document.documentElement.style.setProperty('--event-3-column', 4);
-// document.documentElement.style.setProperty('--event-4-column', 6);
-// document.documentElement.style.setProperty('--event-5-column', 7);
-// document.documentElement.style.setProperty('--event-6-column', 3);
-// document.documentElement.style.setProperty('--event-7-column', 4);
-// document.documentElement.style.setProperty('--event-8-column', 6);
+var calendar = null
+
+document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+
+  calendar = new FullCalendar.Calendar(calendarEl, {
+    hiddenDays: [0,6],
+    handleWindowResize: 'true',
+    initialView: 'timeGridWeek',
+    initialDate: '2022-08-07',
+    headerToolbar: {
+      left: '',
+      center: 'title',
+      right: ''
+    },
+    dayHeaderFormat: {
+      weekday: 'long'
+    }
+  });
+
+  calendar.render();
+});
+
+function testEvent() {
+  calendar.addEvent({
+    title: 'test event',
+    start: '2022-08-10T04:00:00-05:00',
+    end: '2022-08-10T10:00:00-05:00',
+    allDay: false
+  });
+}

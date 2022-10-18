@@ -37,8 +37,8 @@ We used HTML and CSS for the frontend and JavaScript for the backend. The HTML b
 - Instructions for how to use program
 
 ## Credits
-Kjell Magne Fauske - Calendar Template
-https://codepen.io/kjellmf/pen/qgxyVJ
+- DEPRECATED Kjell Magne Fauske - Calendar Template - https://codepen.io/kjellmf/pen/qgxyVJ
+- FullCalendar LLC - https://fullcalendar.io/
 
 ## Known Issues
 - Calendar isn't updating with break times

@@ -140,7 +140,24 @@ function findBreaks(timetable, weekday) {
   console.log(weekday);
   breakdown = breakdown + "<br>" + weekday;
   for (var i = 0; i < timetable.length - 1; i++) {
+    if ((timetable[i][0] == timetable[i + 1][0])) {
+      if (timetable[i][1] >= timetable[i + 1][1]) {
+        timetable.splice(i + 1, 1);
+      }
+      else {
+        timetable.splice(i, 1);
+      }
+    }
+  }
+  for (var i = 0; i < timetable.length - 1; i++) {
+    if ((timetable[i + 1][0] < timetable[i][1])) {
+      timetable.splice(i + 1, 1);
+    }
+  }
+  for (var i = 0; i < timetable.length - 1; i++) {
+    // console.log(timetable);
     if ((timetable[i + 1][0] - timetable[i][1]) > 0) {
+      // console.log(timetable[i + 1][0] - timetable[i][1]);
       breakdown = breakdown + "<br>" + ("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
       console.log("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
       newEvent(timetable[i][1], timetable[i + 1][0], weekday);
@@ -234,8 +251,8 @@ function newEvent(beginTime, endTime, weekday) {
   var endDate = new Date(beginDate);
   beginDate.setHours(beginningHour, beginningMinute, 0);
   endDate.setHours(endingHour, endingMinute, 0);
-  console.log(beginDate);
-  console.log(endDate);
+  // console.log(beginDate);
+  // console.log(endDate);
   calendar.addEvent({
     title: 'Free Time',
     start: beginDate,

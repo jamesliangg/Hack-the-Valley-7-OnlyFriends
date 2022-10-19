@@ -31,7 +31,6 @@ We used HTML and CSS for the frontend and JavaScript for the backend. The HTML b
 
 ## What's next for OnlyFriends
 - Utilizing different APIs to suggest movies, games, and events to do during the breaks
-- Replacing calendar with Google Calendar or similar
 - Add support for more universities
 - Potential addition of compatibility with personal events
 - Instructions for how to use program
@@ -41,4 +40,3 @@ We used HTML and CSS for the frontend and JavaScript for the backend. The HTML b
 - FullCalendar LLC - https://fullcalendar.io/
 
 ## Known Issues
-- Courses with same start time will incorrectly calculate break times

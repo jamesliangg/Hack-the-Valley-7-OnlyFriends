@@ -9,6 +9,7 @@ var breakdown = "";
 var today = new Date();
 
 function mainFunction() {
+  calendar.removeAllEvents();
   console.log(getSundayOfCurrentWeek());
   sortCourses();
   findBreaks(sortTables(mondayTimetable), "Monday");

@@ -41,5 +41,4 @@ We used HTML and CSS for the frontend and JavaScript for the backend. The HTML b
 - FullCalendar LLC - https://fullcalendar.io/
 
 ## Known Issues
-- Calendar isn't updating with break times
 - Courses with same start time will incorrectly calculate break times

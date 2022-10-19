@@ -6,6 +6,17 @@ var thursdayTimetable = new Array;
 var fridayTimetable = new Array;
 var weekdays = ["MO", "TU", "WE", "TH", "FR"];
 var breakdown = "";
+var today = new Date();
+
+function mainFunction() {
+  sortCourses();
+  findBreaks(sortTables(mondayTimetable), "Monday");
+  findBreaks(sortTables(tuesdayTimetable), "Tuesday");
+  findBreaks(sortTables(wednesdayTimetable), "Wednesday");
+  findBreaks(sortTables(thursdayTimetable), "Thursday");
+  findBreaks(sortTables(fridayTimetable), "Friday");
+  breakdown = "";
+}
 
 //Reading file
 function readFile(input) {
@@ -85,6 +96,11 @@ function fileToArray(icsInfo) {
 }
 
 function sortCourses() {
+  mondayTimetable = [];
+  tuesdayTimetable = [];
+  wednesdayTimetable = [];
+  thursdayTimetable = [];
+  fridayTimetable = [];
   for (var i in timing) {
     if (timing[i][0].includes("MO")) {
       mondayTimetable.push([timing[i][1], timing[i][2]]);
@@ -102,11 +118,7 @@ function sortCourses() {
       fridayTimetable.push([timing[i][1], timing[i][2]]);
     }
   }
-  findBreaks(sortTables(mondayTimetable), "Monday");
-  findBreaks(sortTables(tuesdayTimetable), "Tuesday");
-  findBreaks(sortTables(wednesdayTimetable), "Wednesday");
-  findBreaks(sortTables(thursdayTimetable), "Thursday");
-  findBreaks(sortTables(fridayTimetable), "Friday");
+  
 }
 
 function sortTables(timetable) {
@@ -158,9 +170,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   calendar = new FullCalendar.Calendar(calendarEl, {
     hiddenDays: [0,6],
-    handleWindowResize: 'true',
+    handleWindowResize: true,
     initialView: 'timeGridWeek',
-    initialDate: '2022-08-07',
+    initialDate: today,
+    nowIndicator: true,
     headerToolbar: {
       left: '',
       center: 'title',

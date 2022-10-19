@@ -43,4 +43,3 @@ We used HTML and CSS for the frontend and JavaScript for the backend. The HTML b
 ## Known Issues
 - Calendar isn't updating with break times
 - Courses with same start time will incorrectly calculate break times
-- Clicking "Discover!" multiple times will duplicate information

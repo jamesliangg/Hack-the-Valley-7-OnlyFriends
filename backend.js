@@ -9,6 +9,7 @@ var breakdown = "";
 var today = new Date();
 
 function mainFunction() {
+  console.log(getSundayOfCurrentWeek());
   sortCourses();
   findBreaks(sortTables(mondayTimetable), "Monday");
   findBreaks(sortTables(tuesdayTimetable), "Tuesday");
@@ -128,7 +129,7 @@ function sortTables(timetable) {
     }
   }
   timetable.push([000000, 000000]);
-  timetable.push([240000, 240000]);
+  timetable.push([235900, 235900]);
   timetable.sort(sortFunction);
   return timetable
 }
@@ -141,9 +142,10 @@ function findBreaks(timetable, weekday) {
     if ((timetable[i + 1][0] - timetable[i][1]) > 0) {
       breakdown = breakdown + "<br>" + ("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
       console.log("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
+      newEvent(timetable[i][1], timetable[i + 1][0], weekday);
     }
   }
-  document.getElementById("demo").innerHTML = breakdown;
+  // document.getElementById("demo").innerHTML = breakdown;
 }
 
 function sortFunction(a, b) {
@@ -187,11 +189,66 @@ document.addEventListener('DOMContentLoaded', function() {
   calendar.render();
 });
 
-function testEvent() {
+function newEvent(beginTime, endTime, weekday) {
+  beginTime = beginTime.toString();
+  while (beginTime.length < 6) {
+    beginTime = "0" + beginTime;
+  }
+  endTime = endTime.toString();
+  while (endTime.length < 6) {
+    endTime = "0" + endTime;
+  }
+  var beginningHour = beginTime.substring(0,2);
+  var beginningMinute = beginTime.substring(2,4);
+  var endingHour = endTime.substring(0,2);
+  var endingMinute = endTime.substring(2,4);
+  // console.log(beginningHour);
+  // console.log(beginningMinute);
+  beginTime = beginTime.replace(/..\B/g, '$&:');
+  endTime = endTime.replace(/..\B/g, '$&:');
+  // console.log(beginTime);
+  // console.log(endTime);
+  var beginDate = new Date(getSundayOfCurrentWeek());
+  // console.log(beginDate);
+  if (weekday.includes("Mo")){
+    beginDate.setDate(beginDate.getDate() + 1);
+    // console.log(beginDate);
+  }
+  else if (weekday.includes("Tu")){
+    beginDate.setDate(beginDate.getDate() + 2);
+    // console.log(beginDate);
+  }
+  else if (weekday.includes("We")){
+    beginDate.setDate(beginDate.getDate() + 3);
+    // console.log(beginDate);
+  }
+  else if (weekday.includes("Th")){
+    beginDate.setDate(beginDate.getDate() + 4);
+    // console.log(beginDate);
+  }
+  else if (weekday.includes("Fr")){
+    beginDate.setDate(beginDate.getDate() + 5);
+    // console.log(beginDate);
+  }
+  var endDate = new Date(beginDate);
+  beginDate.setHours(beginningHour, beginningMinute, 0);
+  endDate.setHours(endingHour, endingMinute, 0);
+  console.log(beginDate);
+  console.log(endDate);
   calendar.addEvent({
-    title: 'test event',
-    start: '2022-08-10T04:00:00-05:00',
-    end: '2022-08-10T10:00:00-05:00',
+    title: 'Free Time',
+    start: beginDate,
+    end: endDate,
     allDay: false
   });
+}
+
+function getSundayOfCurrentWeek() {
+  const today = new Date();
+  const first = today.getDate() - today.getDay();
+  const last = first;
+
+  const sunday = new Date(today.setDate(last));
+
+  return sunday;
 }

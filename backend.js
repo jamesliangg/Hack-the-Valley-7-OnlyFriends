@@ -4,7 +4,7 @@ var tuesdayTimetable = new Array;
 var wednesdayTimetable = new Array;
 var thursdayTimetable = new Array;
 var fridayTimetable = new Array;
-var weekdays = ["MO", "TU", "WE", "TH", "FR"];
+var weekdays = ["SU", "MO", "TU", "WE", "TH", "FR", "SA"];
 var breakdown = "";
 var today = new Date();
 var calendar = null
@@ -40,87 +40,89 @@ function fileToArray(icsInfo) {
   //YorkU
   if (icsInfo.includes("yorku.ca")) {
     console.log("YorkU");
-    for (var i in icsArray) {
-      if (icsArray[i].includes("RRULE:FREQ=WEEKLY") && !icsArray[i].includes("2023")) {
-        icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf(";") - 2, icsArray[i].lastIndexOf(";"));
-        course++;
-        var weekday = icsArray[i];
-      }
-      else if (icsArray[i].includes("DTSTART;TZID")) {
-        icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
-        course++;
-        var startTime = icsArray[i];
-      }
-      else if (icsArray[i].includes("DURATION")) {
-        var endTime = yorkDuration(icsArray[i], startTime)
-        course++;
-        console.log(weekday + " " + startTime + " " + endTime);
-        timing.push([weekday, startTime, endTime]);
-      }
-
-    }
+    uniSort(icsArray, course, "YorkU");
   }
   //Laurier
-  if (icsInfo.includes("Ellucian")) {
+  else if (icsInfo.includes("Ellucian")) {
     console.log("Laurier");
-    for (var i in icsArray) {
-      if (icsArray[i].includes("DTSTART;TZID")) {
-        icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
-        course++;
-        var startTime = icsArray[i];
-      }
-      else if (icsArray[i].includes("DTEND;TZID")) {
-        icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
-        course++;
-        var endTime = icsArray[i];
-      }
-      else if (icsArray[i].includes("RRULE:FREQ=WEEKLY") && !icsArray[i].includes("2023")) {
-        icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("=") + 1, icsArray[i].length);
-        course++;
-        var weekday = icsArray[i];
-        console.log(weekday + " " + startTime + " " + endTime);
-        timing.push([weekday, startTime, endTime]);
-      }
-    }
+    uniSort(icsArray, course, "Laurier");
+  }
+  //UofT
+  else if (icsInfo.includes("Fortuna")) {
+    console.log("UofT");
+    uniSort(icsArray, course, "UofT");
   }
 }
 
-// function uniSort() {
-//   var courseStart = null;
-//   var courseEnd = null;
-//   var courseFrequency = null;
-//   if (uni.includes("York")) {
-//     courseStart = "DTSTART;TZID";
-//     courseEnd = "DURATION";
-//     courseFrequency = "RRULE:FREQ=WEEKLY";
-//   }
-//   else if (uni.includes("Laurier")) {
-//     courseStart = "DTSTART;TZID";
-//     courseEnd = "DTEND;TZID";
-//     courseFrequency = "RRULE:FREQ=WEEKLY";
-//   }
-//   for (var i in icsArray) {
-//     if (icsArray[i].includes(courseStart)) {
-//       icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
-//       course++;
-//       var startTime = icsArray[i];
-//     }
-//     else if (icsArray[i].includes(courseEnd)) {
-//       icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
-//       course++;
-//       var endTime = icsArray[i];
-//     }
-//     else if (icsArray[i].includes(courseFrequency) && !icsArray[i].includes("2023")) {
-//       icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("=") + 1, icsArray[i].length);
-//       course++;
-//       var weekday = icsArray[i];
-
-//       console.log(weekday + " " + startTime + " " + endTime);
-//       timing.push([weekday, startTime, endTime]);
-//     }
-
-//   }
-// }
+function uniSort(icsArray, course, uni) {
+  var courseStart = null;
+  var courseEnd = null;
+  var courseFrequency = null;
+  var completedOne = false;
+  var completedTwo = false;
+  if (uni.includes("York")) {
+    courseStart = "DTSTART;TZID";
+    courseEnd = "DURATION";
+    courseFrequency = "RRULE:FREQ=WEEKLY";
+  }
+  else if (uni.includes("Laurier")) {
+    courseStart = "DTSTART;TZID";
+    courseEnd = "DTEND;TZID";
+    courseFrequency = "RRULE:FREQ=WEEKLY";
+  }
+  else if (uni.includes("UofT")) {
+    courseStart = "DTSTART;TZID";
+    courseEnd = "DTEND;TZID";
+    courseFrequency = "RRULE:FREQ=WEEKLY";
+  }
+  for (var i in icsArray) {
+    if (icsArray[i].includes(courseStart)) {
+      var uoftStart = icsArray[i].substring(icsArray[i].lastIndexOf(":") + 1, icsArray[i].length);
+      icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
+      course++;
+      var startTime = icsArray[i];
+    }
+    else if (icsArray[i].includes(courseEnd)) {
+      if (uni.includes("Laurier") || uni.includes("UofT")) {
+        icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
+        completedOne = true;
+      }
+      else if (uni.includes("York")) {
+        icsArray[i] = yorkDuration(icsArray[i], startTime);
+        completedOne = true;
+      }
+        course++;
+      var endTime = icsArray[i];
+    }
+    else if (icsArray[i].includes(courseFrequency) && !icsArray[i].includes("2023")) {
+      if (uni.includes("Laurier")) {
+        icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("=") + 1, icsArray[i].length);
+        completedTwo = true;
+      }
+      else if (uni.includes("York")) {
+        icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf(";") - 2, icsArray[i].lastIndexOf(";"));
+        completedTwo = true;
+      }
+      else if (uni.includes("UofT")) {
+        var uoftDate = uoftStart.slice(0, 4) + "-" + uoftStart.slice(4);
+        uoftDate = uoftDate.slice(0, 7) + "-" + uoftDate.slice(7);
+        uoftDate = uoftDate.slice(0, 13) + ":" + uoftDate.slice(13);
+        uoftDate = uoftDate.slice(0, 16) + ":" + uoftDate.slice(16);
+        var uoftFrequency = new Date(uoftDate);
+        icsArray[i] = weekdays[uoftFrequency.getDay()];
+        completedTwo = true;
+      }
+        course++;
+      var weekday = icsArray[i];  
+    }
+    if (completedOne == true && completedTwo == true) {
+      console.log(weekday + " " + startTime + " " + endTime);
+      timing.push([weekday, startTime, endTime]);
+      completedOne = false;
+      completedTwo = false;
+    }
+  }
+}
 
 function yorkDuration(duration, startTime) {
   duration = duration.substring(duration.lastIndexOf("T") + 1, duration.length);

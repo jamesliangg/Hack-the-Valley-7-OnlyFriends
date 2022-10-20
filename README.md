@@ -35,6 +35,11 @@ We used HTML and CSS for the frontend and JavaScript for the backend. The HTML b
 - Potential addition of compatibility with personal events
 - Instructions for how to use program
 
+## University Support
+- Laurier
+- York
+- UofT
+
 ## Credits
 - DEPRECATED Kjell Magne Fauske - Calendar Template - https://codepen.io/kjellmf/pen/qgxyVJ
 - FullCalendar LLC - https://fullcalendar.io/

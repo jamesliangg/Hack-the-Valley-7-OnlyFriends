@@ -9,19 +9,30 @@ var breakdown = "";
 var today = new Date();
 var calendar = null
 
+/**
+ * Calls most other functions
+ */
 function mainFunction() {
+  // clear current calendar
   calendar.removeAllEvents();
-  console.log(getSundayOfCurrentWeek());
+  // console.log(getSundayOfCurrentWeek());
+  // sort courses into weekdays
   sortCourses();
+  // find break times and add to calendar
   findBreaks(sortTables(mondayTimetable), "Monday");
   findBreaks(sortTables(tuesdayTimetable), "Tuesday");
   findBreaks(sortTables(wednesdayTimetable), "Wednesday");
   findBreaks(sortTables(thursdayTimetable), "Thursday");
   findBreaks(sortTables(fridayTimetable), "Friday");
+  // clear breakdown
   breakdown = "";
 }
 
-//Reading file
+/**
+ * Reads ics files and forwards result to create array
+ * 
+ * @param {String} input ics file with timetable
+ */
 function readFile(input) {
   let file = input.files[0];
   let fileReader = new FileReader();
@@ -34,7 +45,13 @@ function readFile(input) {
   };
 }
 
+/**
+ * Splits timetable into an array which is then forwarded into uniSort depending on which University it's from
+ * 
+ * @param {String} icsInfo timetable
+ */
 function fileToArray(icsInfo) {
+  // split timetable into array
   var icsArray = icsInfo.split("\n");
   var course = 0;
   //YorkU
@@ -54,6 +71,13 @@ function fileToArray(icsInfo) {
   }
 }
 
+/**
+ * Finds start time, end time, and weekdays of array which is then added to a new array
+ * 
+ * @param {Array} icsArray array with timetable information
+ * @param {int} course tracks position in arrat
+ * @param {String} uni University timetable is from
+ */
 function uniSort(icsArray, course, uni) {
   var courseStart = null;
   var courseEnd = null;
@@ -75,13 +99,16 @@ function uniSort(icsArray, course, uni) {
     courseEnd = "DTEND;TZID";
     courseFrequency = "RRULE:FREQ=WEEKLY";
   }
+  // goes through every course in array
   for (var i in icsArray) {
+    // finds start time
     if (icsArray[i].includes(courseStart)) {
       var uoftStart = icsArray[i].substring(icsArray[i].lastIndexOf(":") + 1, icsArray[i].length);
       icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
       course++;
       var startTime = icsArray[i];
     }
+    // finds end time
     else if (icsArray[i].includes(courseEnd)) {
       if (uni.includes("Laurier") || uni.includes("UofT")) {
         icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
@@ -94,6 +121,7 @@ function uniSort(icsArray, course, uni) {
         course++;
       var endTime = icsArray[i];
     }
+    // finds weekdays
     else if (icsArray[i].includes(courseFrequency) && !icsArray[i].includes("2023")) {
       if (uni.includes("Laurier")) {
         icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("=") + 1, icsArray[i].length);
@@ -115,6 +143,7 @@ function uniSort(icsArray, course, uni) {
         course++;
       var weekday = icsArray[i];  
     }
+    // adds course to array if all information is gathered
     if (completedOne == true && completedTwo == true) {
       console.log(weekday + " " + startTime + " " + endTime);
       timing.push([weekday, startTime, endTime]);
@@ -124,29 +153,47 @@ function uniSort(icsArray, course, uni) {
   }
 }
 
+/**
+ * Takes York duration and start time to find end time of course
+ * 
+ * @param {String} duration duration of course
+ * @param {String} startTime start time of course
+ * @returns calculated end time
+ */
 function yorkDuration(duration, startTime) {
+  // isolates just number part of String
   duration = duration.substring(duration.lastIndexOf("T") + 1, duration.length);
   duration = duration.slice(0, -1);
+  // calculates hours and minutes within that duration
   var yorkHours = Math.floor(parseInt(duration) / 60);
   var yorkMinutes = parseInt(duration) - yorkHours * 60;
+  // adds end hour to current start time
   var endHour = (Math.floor(parseInt(startTime) / 10000) + yorkHours) * 100;
+  // converts any additional minutes to hour
   var minutesToHour = (Math.floor(parseInt(startTime.slice(2)) / 100));
+  // if minutes are or above 60, go to next hour and convert to format
   if ((minutesToHour + yorkMinutes) >= 60) {
     endHour = endHour / 100 + 1;
     var endTime = endHour * 10000 + (minutesToHour + yorkMinutes - 60) * 100;
   }
+  // if minutes are fine, convert back to format
   else {
     var endTime = endHour * 100 + (minutesToHour + yorkMinutes) * 100;
   }
   return endTime;
 }
 
+/**
+ * Clears arrays then sorts courses into their weekdays
+ */
 function sortCourses() {
+  // clear current arrays
   mondayTimetable = [];
   tuesdayTimetable = [];
   wednesdayTimetable = [];
   thursdayTimetable = [];
   fridayTimetable = [];
+  // sort courses based on weekdays and add to array
   for (var i in timing) {
     if (timing[i][0].includes("MO")) {
       mondayTimetable.push([timing[i][1], timing[i][2]]);
@@ -167,22 +214,39 @@ function sortCourses() {
   
 }
 
+/**
+ * Takes in timetable and sorts it chronologically based on start time
+ * 
+ * @param {Array} timetable timetable to be sorted
+ * @returns sorted timetable array
+ */
 function sortTables(timetable) {
+  // convert array into int
   for (var i in timetable) {
     for (var j in timetable[i]) {
       timetable[i][j] = parseInt(timetable[i][j]);
     }
   }
+  // add midnight to array
   timetable.push([000000, 000000]);
   timetable.push([235900, 235900]);
+  // sort array chronologically
   timetable.sort(sortFunction);
   return timetable
 }
 
+/**
+ * Finds break times in weekday and forwards to newEvent to add break to calendar
+ * 
+ * @param {Array} timetable timetable to anaylze
+ * @param {String} weekday weekday to analyze
+ */
 function findBreaks(timetable, weekday) {
   console.table(timetable);
   console.log(weekday);
+  // DEPRECATED
   breakdown = breakdown + "<br>" + weekday;
+  // removes courses with same start times and keeps the longer end time
   for (var i = 0; i < timetable.length - 1; i++) {
     if ((timetable[i][0] == timetable[i + 1][0])) {
       if (timetable[i][1] >= timetable[i + 1][1]) {
@@ -193,20 +257,30 @@ function findBreaks(timetable, weekday) {
       }
     }
   }
+  // removes courses with start times before previous end time
   for (var i = 0; i < timetable.length - 1; i++) {
     if ((timetable[i + 1][0] < timetable[i][1])) {
       timetable.splice(i + 1, 1);
     }
   }
+  // finds breka times
   for (var i = 0; i < timetable.length - 1; i++) {
     if ((timetable[i + 1][0] - timetable[i][1]) > 0) {
       breakdown = breakdown + "<br>" + ("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
       console.log("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
+      // creates new event
       newEvent(timetable[i][1], timetable[i + 1][0], weekday);
     }
   }
 }
 
+/**
+ * Sorts time chronologically
+ * 
+ * @param {int} a first time
+ * @param {int} b second time
+ * @returns integers in order
+ */
 function sortFunction(a, b) {
   if (a[0] === b[0]) {
     return 0;
@@ -216,14 +290,27 @@ function sortFunction(a, b) {
   }
 }
 
+/**
+ * Calculates length of break time
+ * 
+ * @param {int} firstTime end time of first course
+ * @param {int} secondTime start time of next course
+ * @returns break time between courses
+ */
 function timeDifference(firstTime, secondTime) {
+  // round down and find hours only
   var adjustedFirstHours = Math.floor(firstTime / 10000);
   var adjustedSecondHours = Math.floor(secondTime / 10000);
+  // find total minutes of times
   var minutesFirstTime = (firstTime / 100 - adjustedFirstHours * 100) + adjustedFirstHours * 60;
   var minutesSecondTime = (secondTime / 100 - adjustedSecondHours * 100) + adjustedSecondHours * 60;
+  // return difference in times
   return minutesSecondTime - minutesFirstTime;
 }
 
+/**
+ * Creates calendar
+ */
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
 
@@ -246,8 +333,16 @@ document.addEventListener('DOMContentLoaded', function() {
   calendar.render();
 });
 
+/**
+ * Creates new break event based on inputs
+ * 
+ * @param {int} beginTime beginning time of break
+ * @param {int} endTime end time of break
+ * @param {String} weekday weekday of break
+ */
 function newEvent(beginTime, endTime, weekday) {
   beginTime = beginTime.toString();
+  // add zeros back when integers removed them
   while (beginTime.length < 6) {
     beginTime = "0" + beginTime;
   }
@@ -255,13 +350,17 @@ function newEvent(beginTime, endTime, weekday) {
   while (endTime.length < 6) {
     endTime = "0" + endTime;
   }
+  // isolate hour and minutes
   var beginningHour = beginTime.substring(0,2);
   var beginningMinute = beginTime.substring(2,4);
   var endingHour = endTime.substring(0,2);
   var endingMinute = endTime.substring(2,4);
+  // add colons
   beginTime = beginTime.replace(/..\B/g, '$&:');
   endTime = endTime.replace(/..\B/g, '$&:');
+  // find Sunday
   var beginDate = new Date(getSundayOfCurrentWeek());
+  // set weekday of break
   if (weekday.includes("Mo")){
     beginDate.setDate(beginDate.getDate() + 1);
   }
@@ -277,9 +376,12 @@ function newEvent(beginTime, endTime, weekday) {
   else if (weekday.includes("Fr")){
     beginDate.setDate(beginDate.getDate() + 5);
   }
+  // set end date as same day as beginning
   var endDate = new Date(beginDate);
+  // set break time hours and minutes
   beginDate.setHours(beginningHour, beginningMinute, 0);
   endDate.setHours(endingHour, endingMinute, 0);
+  // create break events
   calendar.addEvent({
     title: 'Free Time',
     start: beginDate,
@@ -288,6 +390,11 @@ function newEvent(beginTime, endTime, weekday) {
   });
 }
 
+/**
+ * Finds the Sunday of the week
+ * 
+ * @returns Sunday of week
+ */
 function getSundayOfCurrentWeek() {
   const today = new Date();
   const first = today.getDate() - today.getDay();

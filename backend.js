@@ -247,7 +247,7 @@ function findBreaks(timetable, weekday) {
   breakdown = breakdown + "<br>" + weekday;
   // removes duplicates
   timetable = multiDimensionalUnique(timetable);
-  console.table(timetable);
+  // console.table(timetable);
   // removes courses with same start times and keeps the longer end time
   for (var i = 0; i < timetable.length - 1; i++) {
     if ((timetable[i][0] == timetable[i + 1][0])) {
@@ -265,7 +265,7 @@ function findBreaks(timetable, weekday) {
       timetable.splice(i + 1, 1);
     }
   }
-  console.table(timetable);
+  // console.table(timetable);
   // finds break times
   for (var i = 0; i < timetable.length - 1; i++) {
     if ((timetable[i + 1][0] - timetable[i][1]) > 0) {

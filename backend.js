@@ -7,6 +7,7 @@ var fridayTimetable = new Array;
 var weekdays = ["MO", "TU", "WE", "TH", "FR"];
 var breakdown = "";
 var today = new Date();
+var calendar = null
 
 function mainFunction() {
   calendar.removeAllEvents();
@@ -26,7 +27,6 @@ function readFile(input) {
   let fileReader = new FileReader();
   fileReader.readAsText(file);
   fileReader.onload = function() {
-    // alert(fileReader.result);
     fileToArray(fileReader.result);
   };
   fileReader.onerror = function() {
@@ -52,19 +52,7 @@ function fileToArray(icsInfo) {
         var startTime = icsArray[i];
       }
       else if (icsArray[i].includes("DURATION")) {
-        icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
-        icsArray[i] = icsArray[i].slice(0, -1);
-        var yorkHours = Math.floor(parseInt(icsArray[i]) / 60);
-        var yorkMinutes = parseInt(icsArray[i]) - yorkHours * 60;
-        var endHour = (Math.floor(parseInt(startTime) / 10000) + yorkHours) * 100;
-        var minutesToHour = (Math.floor(parseInt(startTime.slice(2)) / 100));
-        if ((minutesToHour + yorkMinutes) >= 60) {
-          endHour = endHour / 100 + 1;
-          var endTime = endHour * 10000 + (minutesToHour + yorkMinutes - 60) * 100;
-        }
-        else {
-          var endTime = endHour * 100 + (minutesToHour + yorkMinutes) * 100;
-        }
+        var endTime = yorkDuration(icsArray[i], startTime)
         course++;
         console.log(weekday + " " + startTime + " " + endTime);
         timing.push([weekday, startTime, endTime]);
@@ -95,6 +83,60 @@ function fileToArray(icsInfo) {
       }
     }
   }
+}
+
+// function uniSort() {
+//   var courseStart = null;
+//   var courseEnd = null;
+//   var courseFrequency = null;
+//   if (uni.includes("York")) {
+//     courseStart = "DTSTART;TZID";
+//     courseEnd = "DURATION";
+//     courseFrequency = "RRULE:FREQ=WEEKLY";
+//   }
+//   else if (uni.includes("Laurier")) {
+//     courseStart = "DTSTART;TZID";
+//     courseEnd = "DTEND;TZID";
+//     courseFrequency = "RRULE:FREQ=WEEKLY";
+//   }
+//   for (var i in icsArray) {
+//     if (icsArray[i].includes(courseStart)) {
+//       icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
+//       course++;
+//       var startTime = icsArray[i];
+//     }
+//     else if (icsArray[i].includes(courseEnd)) {
+//       icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
+//       course++;
+//       var endTime = icsArray[i];
+//     }
+//     else if (icsArray[i].includes(courseFrequency) && !icsArray[i].includes("2023")) {
+//       icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("=") + 1, icsArray[i].length);
+//       course++;
+//       var weekday = icsArray[i];
+
+//       console.log(weekday + " " + startTime + " " + endTime);
+//       timing.push([weekday, startTime, endTime]);
+//     }
+
+//   }
+// }
+
+function yorkDuration(duration, startTime) {
+  duration = duration.substring(duration.lastIndexOf("T") + 1, duration.length);
+  duration = duration.slice(0, -1);
+  var yorkHours = Math.floor(parseInt(duration) / 60);
+  var yorkMinutes = parseInt(duration) - yorkHours * 60;
+  var endHour = (Math.floor(parseInt(startTime) / 10000) + yorkHours) * 100;
+  var minutesToHour = (Math.floor(parseInt(startTime.slice(2)) / 100));
+  if ((minutesToHour + yorkMinutes) >= 60) {
+    endHour = endHour / 100 + 1;
+    var endTime = endHour * 10000 + (minutesToHour + yorkMinutes - 60) * 100;
+  }
+  else {
+    var endTime = endHour * 100 + (minutesToHour + yorkMinutes) * 100;
+  }
+  return endTime;
 }
 
 function sortCourses() {
@@ -155,15 +197,12 @@ function findBreaks(timetable, weekday) {
     }
   }
   for (var i = 0; i < timetable.length - 1; i++) {
-    // console.log(timetable);
     if ((timetable[i + 1][0] - timetable[i][1]) > 0) {
-      // console.log(timetable[i + 1][0] - timetable[i][1]);
       breakdown = breakdown + "<br>" + ("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
       console.log("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
       newEvent(timetable[i][1], timetable[i + 1][0], weekday);
     }
   }
-  // document.getElementById("demo").innerHTML = breakdown;
 }
 
 function sortFunction(a, b) {
@@ -182,8 +221,6 @@ function timeDifference(firstTime, secondTime) {
   var minutesSecondTime = (secondTime / 100 - adjustedSecondHours * 100) + adjustedSecondHours * 60;
   return minutesSecondTime - minutesFirstTime;
 }
-
-var calendar = null
 
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
@@ -220,39 +257,27 @@ function newEvent(beginTime, endTime, weekday) {
   var beginningMinute = beginTime.substring(2,4);
   var endingHour = endTime.substring(0,2);
   var endingMinute = endTime.substring(2,4);
-  // console.log(beginningHour);
-  // console.log(beginningMinute);
   beginTime = beginTime.replace(/..\B/g, '$&:');
   endTime = endTime.replace(/..\B/g, '$&:');
-  // console.log(beginTime);
-  // console.log(endTime);
   var beginDate = new Date(getSundayOfCurrentWeek());
-  // console.log(beginDate);
   if (weekday.includes("Mo")){
     beginDate.setDate(beginDate.getDate() + 1);
-    // console.log(beginDate);
   }
   else if (weekday.includes("Tu")){
     beginDate.setDate(beginDate.getDate() + 2);
-    // console.log(beginDate);
   }
   else if (weekday.includes("We")){
     beginDate.setDate(beginDate.getDate() + 3);
-    // console.log(beginDate);
   }
   else if (weekday.includes("Th")){
     beginDate.setDate(beginDate.getDate() + 4);
-    // console.log(beginDate);
   }
   else if (weekday.includes("Fr")){
     beginDate.setDate(beginDate.getDate() + 5);
-    // console.log(beginDate);
   }
   var endDate = new Date(beginDate);
   beginDate.setHours(beginningHour, beginningMinute, 0);
   endDate.setHours(endingHour, endingMinute, 0);
-  // console.log(beginDate);
-  // console.log(endDate);
   calendar.addEvent({
     title: 'Free Time',
     start: beginDate,
@@ -265,8 +290,6 @@ function getSundayOfCurrentWeek() {
   const today = new Date();
   const first = today.getDate() - today.getDay();
   const last = first;
-
   const sunday = new Date(today.setDate(last));
-
   return sunday;
 }

@@ -45,3 +45,4 @@ We used HTML and CSS for the frontend and JavaScript for the backend. The HTML b
 - FullCalendar LLC - https://fullcalendar.io/
 
 ## Known Issues
+- Still incorrectly calculates break times occasionally

@@ -242,10 +242,12 @@ function sortTables(timetable) {
  * @param {String} weekday weekday to analyze
  */
 function findBreaks(timetable, weekday) {
-  console.table(timetable);
+  // console.table(timetable);
   console.log(weekday);
-  // DEPRECATED
   breakdown = breakdown + "<br>" + weekday;
+  // removes duplicates
+  timetable = multiDimensionalUnique(timetable);
+  console.table(timetable);
   // removes courses with same start times and keeps the longer end time
   for (var i = 0; i < timetable.length - 1; i++) {
     if ((timetable[i][0] == timetable[i + 1][0])) {
@@ -263,7 +265,8 @@ function findBreaks(timetable, weekday) {
       timetable.splice(i + 1, 1);
     }
   }
-  // finds breka times
+  console.table(timetable);
+  // finds break times
   for (var i = 0; i < timetable.length - 1; i++) {
     if ((timetable[i + 1][0] - timetable[i][1]) > 0) {
       breakdown = breakdown + "<br>" + ("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
@@ -401,4 +404,23 @@ function getSundayOfCurrentWeek() {
   const last = first;
   const sunday = new Date(today.setDate(last));
   return sunday;
+}
+
+/**
+ * Removes duplicate entries in array
+ * https://stackoverflow.com/questions/20339466/how-to-remove-duplicates-from-a-two-dimensional-array
+ * 
+ * @param {Array} arr array to be modified
+ * @returns unique array
+ */
+function multiDimensionalUnique(arr) {
+  var uniques = [];
+  var itemsFound = {};
+  for(var i = 0, l = arr.length; i < l; i++) {
+      var stringified = JSON.stringify(arr[i]);
+      if(itemsFound[stringified]) { continue; }
+      uniques.push(arr[i]);
+      itemsFound[stringified] = true;
+  }
+  return uniques;
 }

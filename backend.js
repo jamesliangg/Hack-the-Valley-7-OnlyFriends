@@ -247,7 +247,7 @@ function findBreaks(timetable, weekday) {
   breakdown = breakdown + "<br>" + weekday;
   // removes duplicates
   timetable = multiDimensionalUnique(timetable);
-  console.table(timetable);
+  // console.table(timetable);
   // compare current start time and previous end time
   for (var i = 0; i < timetable.length - 1; i++) {
     // compare current start time and previous end time, if less previous end time will become new start time
@@ -260,13 +260,13 @@ function findBreaks(timetable, weekday) {
     }
   }
   // removes courses with start times before previous end time
-  console.table(timetable);
+  // console.table(timetable);
   for (var i = 0; i < timetable.length - 1; i++) {
     if ((timetable[i + 1][0] < timetable[i][1])) {
       timetable.splice(i + 1, 1);
     }
   }
-  console.table(timetable);
+  // console.table(timetable);
   // finds break times
   for (var i = 0; i < timetable.length - 1; i++) {
     if ((timetable[i + 1][0] - timetable[i][1]) > 0) {
@@ -447,6 +447,11 @@ function readFileAsText(file){
   });
 }
 
+/**
+ * https://ourcodeworld.com/articles/read/1438/how-to-read-multiple-files-at-once-using-the-filereader-class-in-javascript
+ * 
+ * @returns 
+ */
 function getFiles() {
   var currentTarget = document.getElementById("fileinput");
   let files = currentTarget.files;

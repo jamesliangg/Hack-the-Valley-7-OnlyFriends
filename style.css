@@ -237,3 +237,24 @@ body {
   overflow: scroll;
   overflow-x: hidden;
 }
+
+.footer {
+  /* background-image: url("background_good.png"); */
+  background-image: url("images/bg.png");
+  /* background-color: #a0a9da; */
+  background-size: cover;
+  height: 5vh;
+  /*border: 3px solid red;*/
+  top: 3em;
+  left: 3em;
+}
+
+.footer_text {
+  top: 3em;
+  left: 3em;
+  border-radius: 50px;
+  font-family: 'sans-serif';
+  /* border:3px solid #7967B3; */
+  padding:2px;
+  font-size: 15px;
+}

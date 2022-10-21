@@ -681,7 +681,7 @@ A HORIZONTAL event
 .fc-theme-standard .fc-popover {
     border: 1px solid #ddd;
     border: 1px solid var(--fc-border-color, #ddd);
-    background: #fff;
+    background: rgb(255, 0, 0);
     background: var(--fc-page-bg-color, #fff);
   }
 .fc-theme-standard .fc-popover-header {

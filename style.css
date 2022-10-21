@@ -9,7 +9,7 @@ html,body
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 30%;
 }
 
 .text{
@@ -19,7 +19,9 @@ html,body
 }
 
 .home_page {
-  background-image: url("background_good.png");
+  /* background-image: url("background_good.png"); */
+  background-image: url("images/bg.png");
+  /* background-color: #a0a9da; */
   background-size: cover;
   height: 75vh;
   /*border: 3px solid red;*/
@@ -42,7 +44,7 @@ body {
 }
 
 .title {
-  background: #980000;
+  background: #7967B3;
   text-align: center;
   display: grid;
   place-content: center;
@@ -155,7 +157,7 @@ body {
 .current-time {
   grid-column: 9;
   grid-row: 10;
-  border-top: 2px solid #980000;
+  border-top: 2px solid #7967B3;
   position: relative;
   top: calc(50% - 1px);
 }
@@ -163,9 +165,9 @@ body {
 .circle {
   width: 12px;
   height: 12px;
-  border: 1px solid #980000;
+  border: 1px solid #7967B3;
   border-radius: 50%;
-  background: #980000;
+  background: #7967B3;
   position: relative;
   top: -6px;
   left: -6px;
@@ -184,13 +186,13 @@ body {
 }
 
 .customfile{
-  border:3px solid #980000;
+  border:3px solid #7967B3;
   border-radius: 50px;
   padding:2px;
   font-size: 15px;
 }
 .customfile::-webkit-file-upload-button{
-  background: #980000;
+  background: #7967B3;
   color: #fff;
   padding: 5px 8px;
   border: none;
@@ -199,7 +201,7 @@ body {
 }
 
 .discover {
-  background-color: #980000;
+  background-color: #7967B3;
   border: none;
   border-radius: 50px;
   color: white;
@@ -212,7 +214,7 @@ body {
 }
 
 .set_size {
-  background-color: #980000;
+  background-color: #7967B3;
   border: none;
   border-radius: 50px;
   color: white;

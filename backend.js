@@ -324,6 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initialView: 'timeGridWeek',
     initialDate: today,
     nowIndicator: true,
+    eventBackgroundColor: '#7967B3',
     headerToolbar: {
       left: '',
       center: 'title',

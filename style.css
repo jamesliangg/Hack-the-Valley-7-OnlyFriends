@@ -9,7 +9,7 @@ html,body
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 30%;
+  width: 25%;
 }
 
 .text{
@@ -23,7 +23,7 @@ html,body
   background-image: url("images/bg.png");
   /* background-color: #a0a9da; */
   background-size: cover;
-  height: 75vh;
+  height: 60vh;
   /*border: 3px solid red;*/
 }
 </style>
@@ -186,12 +186,14 @@ body {
 }
 
 .customfile{
+  font-family: 'sans-serif';
   border:3px solid #7967B3;
   border-radius: 50px;
   padding:2px;
   font-size: 15px;
 }
 .customfile::-webkit-file-upload-button{
+  font-family: 'sans-serif';
   background: #7967B3;
   color: #fff;
   padding: 5px 8px;
@@ -202,6 +204,7 @@ body {
 
 .discover {
   background-color: #7967B3;
+  font-family: 'sans-serif';
   border: none;
   border-radius: 50px;
   color: white;

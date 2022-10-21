@@ -1,6 +1,6 @@
-![logo](logo.png)
+<img src="images/logo_transparent.png" alt="logo" width="400"/>
 
-# OnlyFriends
+# RU3
 Project for Hack the Valley VII
 
 ## Inspiration

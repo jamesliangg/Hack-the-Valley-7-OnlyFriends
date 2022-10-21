@@ -6,6 +6,7 @@
   <title>RU3 - Every Plan Has a Story</title>
   <link rel="icon" type="image/x-icon" href="images/Draft_3.png">
   <meta charset='utf-8' />
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> 
   <meta name="description" content="RU3 takes your group's University timetables and finds when you have a common break time.">
   <meta name="keywords" content="University, Timetable, JavaScript, Break">
   <meta name="author" content="James Liang, Vincent Trung, Danny Yang, Winni Cheng">
@@ -26,27 +27,23 @@
 
 <body>
   <script type="text/javascript" src="backend.js"> </script>
-  <!--the front page-->
-  <div class="home_page">
-    <!--website header logo-->
-    <img src="images/logo_transparent.png" class="logo" class="bk" alt="logo isnt working">
-    <!-- <h2 class="text">Every Plan Has a Story</h2> -->
-    <!--move button later-->
-    <p style="text-align:center;">
-      <input onchange="getFiles()" id="fileinput" type="file" class="customfile" accept=".ics" multiple>
-      <button onclick="mainFunction()" class="discover">Discover!</button>
-    </p>    
-  </div>
-</body>
+    <!--the front page-->
+    <div class="home_page">
+      <!--website header logo-->
+      <img src="images/logo_transparent.png" class="logo" class="bk" alt="logo isnt working">
+      <!-- <h2 class="text">Every Plan Has a Story</h2> -->
+      <!--move button later-->
+      <p style="text-align:center;">
+        <input onchange="getFiles()" id="fileinput" type="file" class="customfile" accept=".ics" multiple>
+        <button onclick="mainFunction()" class="discover">Discover!</button>
+      </p>
+    </div>
+  </body>
 
-<body>
-  <div id='calendar'></div>
-</body>
-
-<div class="footer">
-  <div class="footer_text">
-    <h3>Credits: James Liang, Vincent Trung, Danny Yang, Winni Cheng</h3>
-    <h3>Check out the <a href="https://github.com/jamesliangg/Hack-the-Valley-7-OnlyFriends">GitHub Repo</a> </h3>
-  </div>
-</div>
+  <body>
+    <div class="calendar_background">
+      <div id='calendar'></div>
+    </div>
+    
+  </body>
 </html>

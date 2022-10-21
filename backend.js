@@ -320,10 +320,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   calendar = new FullCalendar.Calendar(calendarEl, {
     hiddenDays: [0,6],
+    height: '100%',
+    slotDuration: '00:30:00',
+    scrollTime: '08:00:00',
+    // slotMinTime: '08:00:00',
     handleWindowResize: true,
     initialView: 'timeGridWeek',
     initialDate: today,
     nowIndicator: true,
+    allDaySlot: false,
+    expandRows: true,
     eventBackgroundColor: '#7967B3',
     headerToolbar: {
       left: '',
@@ -331,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
       right: ''
     },
     dayHeaderFormat: {
-      weekday: 'long'
+      weekday: 'short'
     }
   });
 

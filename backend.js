@@ -136,7 +136,7 @@ function uniSort(icsArray, course, uni) {
         uoftDate = uoftDate.slice(0, 7) + "-" + uoftDate.slice(7);
         uoftDate = uoftDate.slice(0, 13) + ":" + uoftDate.slice(13);
         uoftDate = uoftDate.slice(0, 16) + ":" + uoftDate.slice(16);
-        var uoftFrequency = new Date(uoftDate);
+        uoftFrequency = new Date(uoftDate.trim());
         icsArray[i] = weekdays[uoftFrequency.getDay()];
         completedTwo = true;
       }
@@ -425,8 +425,6 @@ function multiDimensionalUnique(arr) {
   }
   return uniques;
 }
-
-
 
 /**
  * https://ourcodeworld.com/articles/read/1438/how-to-read-multiple-files-at-once-using-the-filereader-class-in-javascript

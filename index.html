@@ -30,10 +30,33 @@
     <h2 class="text">Every Plan Has a Story</h2>
     <!--move button later-->
     <p style="text-align:center;">
-      <input onchange="readFile(this)" id="file" type="file" class="customfile" accept=".ics">
+      <!-- <input onchange="readFile(this)" id="file" type="file" class="customfile" accept=".ics"> -->
+      <input id="fileinput" type="file" class="customfile" accept=".ics" multiple>
+      <!-- https://ourcodeworld.com/articles/read/1438/how-to-read-multiple-files-at-once-using-the-filereader-class-in-javascript -->
+      <script>
+        // Handle multiple fileuploads
+        document.getElementById("fileinput").addEventListener("change", function(ev){
+          let files = ev.currentTarget.files;
+          let readers = [];
+          // Abort if there were no files selected
+          if(!files.length) return;
+          // Store promises in array
+          for(let i = 0;i < files.length;i++){
+            readers.push(readFileAsText(files[i]));
+          }
+          // Trigger Promises
+          Promise.all(readers).then((values) => {
+            // Values will be an array that contains an item
+            // with the text of every selected file
+            // ["File1 Content", "File2 Content" ... "FileN Content"]
+            for (var i in values) {
+              fileToArray(values[i]);
+            }
+          });
+        }, false);
+    </script>
       <button onclick="mainFunction()" class="discover">Discover!</button>
-    </p>
-    
+    </p>    
   </div>
 </body>
 

@@ -242,12 +242,12 @@ function sortTables(timetable) {
  * @param {String} weekday weekday to analyze
  */
 function findBreaks(timetable, weekday) {
-  // console.table(timetable);
   console.log(weekday);
+  console.table(timetable);
   breakdown = breakdown + "<br>" + weekday;
   // removes duplicates
   timetable = multiDimensionalUnique(timetable);
-  // console.table(timetable);
+  console.table(timetable);
   // removes courses with same start times and keeps the longer end time
   for (var i = 0; i < timetable.length - 1; i++) {
     if ((timetable[i][0] == timetable[i + 1][0])) {
@@ -262,15 +262,23 @@ function findBreaks(timetable, weekday) {
   // removes courses with start times before previous end time
   for (var i = 0; i < timetable.length - 1; i++) {
     if ((timetable[i + 1][0] < timetable[i][1])) {
+      if (timetable[i + 1][1] > timetable[i][1]) {
+        timetable[i][1] = timetable[i + 1][1];
+      }
       timetable.splice(i + 1, 1);
     }
   }
-  // console.table(timetable);
+  // for (var i = 0; i < timetable.length - 1; i++) {
+  //   if ((timetable[i + 1][0] < timetable[i][1])) {
+  //     timetable.splice(i + 1, 1);
+  //   }
+  // }
+  console.table(timetable);
   // finds break times
   for (var i = 0; i < timetable.length - 1; i++) {
     if ((timetable[i + 1][0] - timetable[i][1]) > 0) {
       breakdown = breakdown + "<br>" + ("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
-      console.log("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
+      // console.log("There is a " + timeDifference(timetable[i][1], timetable[i + 1][0]) + " minute break between " + timetable[i][1] + " to " + timetable[i + 1][0]);
       // creates new event
       newEvent(timetable[i][1], timetable[i + 1][0], weekday);
     }
@@ -443,5 +451,26 @@ function readFileAsText(file){
           reject(fr);
       };
       fr.readAsText(file);
+  });
+}
+
+function getFiles() {
+  var currentTarget = document.getElementById("fileinput");
+  let files = currentTarget.files;
+  let readers = [];
+  // Abort if there were no files selected
+  if(!files.length) return;
+  // Store promises in array
+  for(let i = 0;i < files.length;i++){
+    readers.push(readFileAsText(files[i]));
+  }
+  // Trigger Promises
+  Promise.all(readers).then((values) => {
+    // Values will be an array that contains an item
+    // with the text of every selected file
+    // ["File1 Content", "File2 Content" ... "FileN Content"]
+    for (var i in values) {
+      fileToArray(values[i]);
+    }
   });
 }

@@ -39,6 +39,7 @@ We used HTML and CSS for the frontend and JavaScript for the backend. The HTML b
 - Laurier
 - York
 - UofT
+- Waterloo (after using https://schedule.wattools.ca/)
 
 ## Credits
 - DEPRECATED Kjell Magne Fauske - Calendar Template - https://codepen.io/kjellmf/pen/qgxyVJ

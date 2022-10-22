@@ -69,6 +69,10 @@ function fileToArray(icsInfo) {
     console.log("UofT");
     uniSort(icsArray, course, "UofT");
   }
+  else if (icsInfo.includes("hacksw")) {
+    console.log("Waterloo");
+    uniSort(icsArray, course, "Waterloo");
+  }
 }
 
 /**
@@ -99,6 +103,11 @@ function uniSort(icsArray, course, uni) {
     courseEnd = "DTEND;TZID";
     courseFrequency = "RRULE:FREQ=WEEKLY";
   }
+  else if (uni.includes("Waterloo")) {
+    courseStart = "DTSTART:";
+    courseEnd = "DTEND:";
+    courseFrequency = "RRULE:FREQ=WEEKLY";
+  }
   // goes through every course in array
   for (var i in icsArray) {
     // finds start time
@@ -110,7 +119,7 @@ function uniSort(icsArray, course, uni) {
     }
     // finds end time
     else if (icsArray[i].includes(courseEnd)) {
-      if (uni.includes("Laurier") || uni.includes("UofT")) {
+      if (uni.includes("Laurier") || uni.includes("UofT") || uni.includes("Waterloo")) {
         icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
         completedOne = true;
       }
@@ -123,7 +132,7 @@ function uniSort(icsArray, course, uni) {
     }
     // finds weekdays
     else if (icsArray[i].includes(courseFrequency) && !icsArray[i].includes("2023")) {
-      if (uni.includes("Laurier")) {
+      if (uni.includes("Laurier") || uni.includes("Waterloo")) {
         icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("=") + 1, icsArray[i].length);
         completedTwo = true;
       }

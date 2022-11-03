@@ -73,6 +73,10 @@ function fileToArray(icsInfo) {
     console.log("Waterloo");
     uniSort(icsArray, course, "Waterloo");
   }
+  else if (icsInfo.includes("James")) {
+    console.log("YorkU");
+    uniSort(icsArray, course, "Waterloo");
+  }
 }
 
 /**

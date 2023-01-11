@@ -34,10 +34,11 @@ We used HTML and CSS for the frontend and JavaScript for the backend. The HTML b
 - Add support for more universities
 - Potential addition of compatibility with personal events
 - Instructions for how to use program
+- Select semester for comparison
 
 ## University Support
 - Laurier
-- York
+- York (batch export using https://yorkexporter.netlify.app/)
 - UofT
 - Waterloo (after using https://schedule.wattools.ca/)
 

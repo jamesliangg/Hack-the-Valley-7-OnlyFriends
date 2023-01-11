@@ -114,7 +114,8 @@ function uniSort(icsArray, course, uni) {
   }
   // goes through every course in array
   for (var i in icsArray) {
-    // finds start time
+    if (icsArray[i].includes("2023")) {
+      // finds start time
     if (icsArray[i].includes(courseStart)) {
       var uoftStart = icsArray[i].substring(icsArray[i].lastIndexOf(":") + 1, icsArray[i].length);
       icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
@@ -135,7 +136,7 @@ function uniSort(icsArray, course, uni) {
       var endTime = icsArray[i];
     }
     // finds weekdays
-    else if (icsArray[i].includes(courseFrequency) && !icsArray[i].includes("2023")) {
+    else if (icsArray[i].includes(courseFrequency)) {
       if (uni.includes("Laurier") || uni.includes("Waterloo")) {
         icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("=") + 1, icsArray[i].length);
         completedTwo = true;
@@ -155,6 +156,7 @@ function uniSort(icsArray, course, uni) {
       }
         course++;
       var weekday = icsArray[i];  
+    }
     }
     // adds course to array if all information is gathered
     if (completedOne == true && completedTwo == true) {

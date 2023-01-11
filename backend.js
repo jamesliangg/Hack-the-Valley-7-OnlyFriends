@@ -91,10 +91,8 @@ function findAcademicYear(icsArray) {
   // goes through every course in array
   var yearArray = [];
   for (var i in icsArray) {
-    if (/[2]\d\d\d\d\d\d\d[T]/.exec(icsArray[i])) {
-      // console.log(icsArray[i].substring(icsArray[i].lastIndexOf(":") + 1, icsArray[i].length));
+    if (/[2]\d\d\d\d\d\d\d[T]/.exec(icsArray[i]) && icsArray[i].includes("WEEK")) {
       var year = String(/[2]\d\d\d/.exec(/[2]\d\d\d\d\d\d\d[T]/.exec(icsArray[i])));
-      // console.log(year);
       yearArray.push(year);
     }
   }

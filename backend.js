@@ -17,7 +17,7 @@ var academicYear = 2000;
 function mainFunction() {
   // clear current calendar
   calendar.removeAllEvents();
-  // console.log(getSundayOfCurrentWeek());
+  readSemester();
   // sort courses into weekdays
   sortCourses();
   // find break times and add to calendar
@@ -84,15 +84,12 @@ function fileToArray(icsInfo) {
   }
 }
 
-function findAcademicYear(icsArray) {
-  // goes through every course in array
+function findAcademicYear(courseArrray) {
   var yearArray = [];
-  for (var i in icsArray) {
-    if (/[2]\d\d\d\d\d\d\d[T]/.exec(icsArray[i]) && icsArray[i].includes("WEEK")) {
-      var year = String(/[2]\d\d\d/.exec(/[2]\d\d\d\d\d\d\d[T]/.exec(icsArray[i])));
-      yearArray.push(year);
-    }
+  for (var i in courseArrray) { 
+    yearArray.push(courseArrray[i][3]);
   }
+  console.log(yearArray);
   yearArray = multiDimensionalUnique(yearArray);
   academicYear = Math.min(...yearArray);
   console.log(academicYear);
@@ -108,6 +105,7 @@ function findAcademicYear(icsArray) {
 function uniSort(icsArray, course, uni) {
   var courseStart = null;
   var courseEnd = null;
+  var courseYear = null;
   var courseFrequency = null;
   var completedOne = false;
   var completedTwo = false;
@@ -126,17 +124,13 @@ function uniSort(icsArray, course, uni) {
     courseEnd = "DTEND:";
     courseFrequency = "RRULE:FREQ=WEEKLY";
   }
-  readSemester();
-  findAcademicYear(icsArray);
-  if (semester.includes("winter")) {
-    academicYear++;
-  }
   // goes through every course in array
   for (var i in icsArray) {
-    if (icsArray[i].includes(academicYear)) {
+    // if (icsArray[i].includes(academicYear)) {
       // finds start time
       if (icsArray[i].includes(courseStart)) {
         var uoftStart = icsArray[i].substring(icsArray[i].lastIndexOf(":") + 1, icsArray[i].length);
+        courseYear = String(/[2]\d\d\d/.exec(uoftStart));
         icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
         course++;
         var startTime = icsArray[i];
@@ -168,11 +162,11 @@ function uniSort(icsArray, course, uni) {
           course++;
         var weekday = icsArray[i];  
       }
-    }
+    // }
     // adds course to array if all information is gathered
     if (completedOne == true && completedTwo == true) {
-      console.log(weekday + " " + startTime + " " + endTime);
-      timing.push([weekday, startTime, endTime]);
+      console.log(weekday + " " + startTime + " " + endTime + " " + courseYear);
+      timing.push([weekday, startTime, endTime, courseYear]);
       completedOne = false;
       completedTwo = false;
     }
@@ -183,31 +177,42 @@ function uniSort(icsArray, course, uni) {
  * Clears arrays then sorts courses into their weekdays
  */
 function sortCourses() {
+  findAcademicYear(timing);
+  if (semester.includes("winter")) {
+    academicYear++;
+  }
   // clear current arrays
   mondayTimetable = [];
   tuesdayTimetable = [];
   wednesdayTimetable = [];
   thursdayTimetable = [];
   fridayTimetable = [];
-  // sort courses based on weekdays and add to array
-  for (var i in timing) {
-    if (timing[i][0].includes("MO")) {
-      mondayTimetable.push([timing[i][1], timing[i][2]]);
-    }
-    if (timing[i][0].includes("TU")) {
-      tuesdayTimetable.push([timing[i][1], timing[i][2]]);
-    }
-    if (timing[i][0].includes("WE")) {
-      wednesdayTimetable.push([timing[i][1], timing[i][2]]);
-    }
-    if (timing[i][0].includes("TH")) {
-      thursdayTimetable.push([timing[i][1], timing[i][2]]);
-    }
-    if (timing[i][0].includes("FR")) {
-      fridayTimetable.push([timing[i][1], timing[i][2]]);
+  var semesterArray = timing.slice();
+  for (var i in semesterArray) {
+    if (semesterArray[i][3] != academicYear) {
+      console.log(semesterArray[i]);
+      delete semesterArray[i];
     }
   }
-  
+  console.log(semesterArray);
+  // sort courses based on weekdays and add to array
+  for (var i in semesterArray) {
+    if (semesterArray[i][0].includes("MO")) {
+      mondayTimetable.push([semesterArray[i][1], semesterArray[i][2]]);
+    }
+    if (semesterArray[i][0].includes("TU")) {
+      tuesdayTimetable.push([semesterArray[i][1], semesterArray[i][2]]);
+    }
+    if (semesterArray[i][0].includes("WE")) {
+      wednesdayTimetable.push([semesterArray[i][1], semesterArray[i][2]]);
+    }
+    if (semesterArray[i][0].includes("TH")) {
+      thursdayTimetable.push([semesterArray[i][1], semesterArray[i][2]]);
+    }
+    if (semesterArray[i][0].includes("FR")) {
+      fridayTimetable.push([semesterArray[i][1], semesterArray[i][2]]);
+    }
+  }
 }
 
 /**
@@ -323,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
     handleWindowResize: true,
     initialView: 'timeGridWeek',
     initialDate: today,
-    nowIndicator: true,
+    // nowIndicator: true,
     allDaySlot: false,
     expandRows: true,
     eventBackgroundColor: '#7967B3',

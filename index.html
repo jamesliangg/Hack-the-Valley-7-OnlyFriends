@@ -32,6 +32,7 @@
     <h2>Instructions</h2>
     <ol>
       <li>Gather iCal files from your group</li>
+      <li>Select the semester you'd like to search</li>
       <li>Upload the files via the "Choose Files" button</li>
       <li>Click "Discover!", break times will appear in calendar below</li>
     </ol>
@@ -41,9 +42,10 @@
       <option value="fall">Fall</option>
       <option value="winter">Winter</option>
     </select>
-    <br>
+    <br><br>
       <!-- <p style="text-align:center;"> -->
         <input onchange="getFiles()" id="fileinput" type="file" accept=".ics" multiple>
+        <br><br>
         <button onclick="mainFunction()">Discover!</button>
       <!-- </p> -->
     </div>

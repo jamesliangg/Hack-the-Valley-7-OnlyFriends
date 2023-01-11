@@ -33,8 +33,6 @@ We used HTML and CSS for the frontend and JavaScript for the backend. The HTML b
 - Utilizing different APIs to suggest movies, games, and events to do during the breaks
 - Add support for more universities
 - Potential addition of compatibility with personal events
-- Instructions for how to use program
-- Select semester for comparison
 
 ## University Support
 - Laurier
@@ -47,3 +45,4 @@ We used HTML and CSS for the frontend and JavaScript for the backend. The HTML b
 - FullCalendar LLC - https://fullcalendar.io/
 
 ## Known Issues
+- Unsure of compatibility w/Laurier and Waterloo Winter courses as there are no samples

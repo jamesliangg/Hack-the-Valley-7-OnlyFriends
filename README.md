@@ -3,6 +3,11 @@
 # RU3
 Project for Hack the Valley VII
 
+## Branched Version Features
+https://universitybreaks.netlify.app/
+- Instructions for use
+- Semester selection
+
 ## Inspiration
 Comparing timetables with other students has become tedious, especially when groups get larger. We wanted to create a program to find collective breaks to lessen the complexity of hanging out with your friends, even those out of town. Everyone needs a break to socialize sometimes.
 

@@ -62,13 +62,8 @@ function fileToArray(icsInfo) {
   // split timetable into array
   var icsArray = icsInfo.split("\n");
   var course = 0;
-  //YorkU
-  if (icsInfo.includes("yorku.ca")) {
-    console.log("YorkU");
-    uniSort(icsArray, course, "YorkU");
-  }
   //Laurier
-  else if (icsInfo.includes("Ellucian")) {
+  if (icsInfo.includes("Ellucian")) {
     console.log("Laurier");
     uniSort(icsArray, course, "Laurier");
   }
@@ -77,10 +72,12 @@ function fileToArray(icsInfo) {
     console.log("UofT");
     uniSort(icsArray, course, "UofT");
   }
+  //Waterloo
   else if (icsInfo.includes("hacksw")) {
     console.log("Waterloo");
     uniSort(icsArray, course, "Waterloo");
   }
+  //York
   else if (icsInfo.includes("James")) {
     console.log("YorkU");
     uniSort(icsArray, course, "Waterloo");
@@ -114,12 +111,7 @@ function uniSort(icsArray, course, uni) {
   var courseFrequency = null;
   var completedOne = false;
   var completedTwo = false;
-  if (uni.includes("York")) {
-    courseStart = "DTSTART;TZID";
-    courseEnd = "DURATION";
-    courseFrequency = "RRULE:FREQ=WEEKLY";
-  }
-  else if (uni.includes("Laurier")) {
+  if (uni.includes("Laurier")) {
     courseStart = "DTSTART;TZID";
     courseEnd = "DTEND;TZID";
     courseFrequency = "RRULE:FREQ=WEEKLY";
@@ -155,21 +147,13 @@ function uniSort(icsArray, course, uni) {
           icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
           completedOne = true;
         }
-        else if (uni.includes("York")) {
-          icsArray[i] = yorkDuration(icsArray[i], startTime);
-          completedOne = true;
-        }
-          course++;
+        course++;
         var endTime = icsArray[i];
       }
       // finds weekdays
       else if (icsArray[i].includes(courseFrequency)) {
         if (uni.includes("Laurier") || uni.includes("Waterloo")) {
           icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("=") + 1, icsArray[i].length);
-          completedTwo = true;
-        }
-        else if (uni.includes("York")) {
-          icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf(";") - 2, icsArray[i].lastIndexOf(";"));
           completedTwo = true;
         }
         else if (uni.includes("UofT")) {
@@ -193,36 +177,6 @@ function uniSort(icsArray, course, uni) {
       completedTwo = false;
     }
   }
-}
-
-/**
- * Takes York duration and start time to find end time of course
- * 
- * @param {String} duration duration of course
- * @param {String} startTime start time of course
- * @returns calculated end time
- */
-function yorkDuration(duration, startTime) {
-  // isolates just number part of String
-  duration = duration.substring(duration.lastIndexOf("T") + 1, duration.length);
-  duration = duration.slice(0, -1);
-  // calculates hours and minutes within that duration
-  var yorkHours = Math.floor(parseInt(duration) / 60);
-  var yorkMinutes = parseInt(duration) - yorkHours * 60;
-  // adds end hour to current start time
-  var endHour = (Math.floor(parseInt(startTime) / 10000) + yorkHours) * 100;
-  // converts any additional minutes to hour
-  var minutesToHour = (Math.floor(parseInt(startTime.slice(2)) / 100));
-  // if minutes are or above 60, go to next hour and convert to format
-  if ((minutesToHour + yorkMinutes) >= 60) {
-    endHour = endHour / 100 + 1;
-    var endTime = endHour * 10000 + (minutesToHour + yorkMinutes - 60) * 100;
-  }
-  // if minutes are fine, convert back to format
-  else {
-    var endTime = endHour * 100 + (minutesToHour + yorkMinutes) * 100;
-  }
-  return endTime;
 }
 
 /**

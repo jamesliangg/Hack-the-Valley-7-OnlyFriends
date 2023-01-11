@@ -38,7 +38,7 @@ We used HTML and CSS for the frontend and JavaScript for the backend. The HTML b
 
 ## University Support
 - Laurier
-- York (batch export using https://yorkexporter.netlify.app/)
+- York (after using https://yorkexporter.netlify.app/)
 - UofT
 - Waterloo (after using https://schedule.wattools.ca/)
 

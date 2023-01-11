@@ -27,16 +27,25 @@
 
 <body>
   <script type="text/javascript" src="backend.js"> </script>
-    <!--the front page-->
-    <div class="home_page">
-      <!--website header logo-->
-      <img src="images/logo_transparent.png" class="logo" class="bk" alt="logo isnt working">
-      <!-- <h2 class="text">Every Plan Has a Story</h2> -->
-      <!--move button later-->
-      <p style="text-align:center;">
-        <input onchange="getFiles()" id="fileinput" type="file" class="customfile" accept=".ics" multiple>
-        <button onclick="mainFunction()" class="discover">Discover!</button>
-      </p>
+    <h1>RU3 Break Finder</h1>
+    <body>Takes University calendar files and finds common break times</body>
+    <h2>Instructions</h2>
+    <ol>
+      <li>Gather iCal files from your group</li>
+      <li>Upload the files via the "Choose Files" button</li>
+      <li>Click "Discover!", break times will appear in calendar below</li>
+    </ol>
+    <br>
+    <label for="semester">Semester</label>
+    <select name="semester" id="semester">
+      <option value="fall">Fall</option>
+      <option value="winter">Winter</option>
+    </select>
+    <br>
+      <!-- <p style="text-align:center;"> -->
+        <input onchange="getFiles()" id="fileinput" type="file" accept=".ics" multiple>
+        <button onclick="mainFunction()">Discover!</button>
+      <!-- </p> -->
     </div>
   </body>
 

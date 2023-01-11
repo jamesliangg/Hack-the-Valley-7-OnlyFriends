@@ -8,6 +8,8 @@ var weekdays = ["SU", "MO", "TU", "WE", "TH", "FR", "SA"];
 var breakdown = "";
 var today = new Date();
 var calendar = null
+var semester = "fall";
+var academicYear = 2000;
 
 /**
  * Calls most other functions
@@ -44,6 +46,12 @@ function readFile(input) {
     alert(fileReader.error);
   };
 }
+/**
+ * Finds whether user selected fall or winter semster
+ */
+function readSemester(){
+  semester = document.getElementById("semester").value;
+}
 
 /**
  * Splits timetable into an array which is then forwarded into uniSort depending on which University it's from
@@ -79,6 +87,22 @@ function fileToArray(icsInfo) {
   }
 }
 
+function findAcademicYear(icsArray) {
+  // goes through every course in array
+  var yearArray = [];
+  for (var i in icsArray) {
+    if (/[2]\d\d\d\d\d\d\d[T]/.exec(icsArray[i])) {
+      // console.log(icsArray[i].substring(icsArray[i].lastIndexOf(":") + 1, icsArray[i].length));
+      var year = String(/[2]\d\d\d/.exec(/[2]\d\d\d\d\d\d\d[T]/.exec(icsArray[i])));
+      // console.log(year);
+      yearArray.push(year);
+    }
+  }
+  yearArray = multiDimensionalUnique(yearArray);
+  academicYear = Math.min(...yearArray);
+  console.log(academicYear);
+}
+
 /**
  * Finds start time, end time, and weekdays of array which is then added to a new array
  * 
@@ -112,51 +136,56 @@ function uniSort(icsArray, course, uni) {
     courseEnd = "DTEND:";
     courseFrequency = "RRULE:FREQ=WEEKLY";
   }
+  readSemester();
+  findAcademicYear(icsArray);
+  if (semester.includes("winter")) {
+    academicYear++;
+  }
   // goes through every course in array
   for (var i in icsArray) {
-    if (icsArray[i].includes("2023")) {
+    if (icsArray[i].includes(academicYear)) {
       // finds start time
-    if (icsArray[i].includes(courseStart)) {
-      var uoftStart = icsArray[i].substring(icsArray[i].lastIndexOf(":") + 1, icsArray[i].length);
-      icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
-      course++;
-      var startTime = icsArray[i];
-    }
-    // finds end time
-    else if (icsArray[i].includes(courseEnd)) {
-      if (uni.includes("Laurier") || uni.includes("UofT") || uni.includes("Waterloo")) {
+      if (icsArray[i].includes(courseStart)) {
+        var uoftStart = icsArray[i].substring(icsArray[i].lastIndexOf(":") + 1, icsArray[i].length);
         icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
-        completedOne = true;
-      }
-      else if (uni.includes("York")) {
-        icsArray[i] = yorkDuration(icsArray[i], startTime);
-        completedOne = true;
-      }
         course++;
-      var endTime = icsArray[i];
-    }
-    // finds weekdays
-    else if (icsArray[i].includes(courseFrequency)) {
-      if (uni.includes("Laurier") || uni.includes("Waterloo")) {
-        icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("=") + 1, icsArray[i].length);
-        completedTwo = true;
+        var startTime = icsArray[i];
       }
-      else if (uni.includes("York")) {
-        icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf(";") - 2, icsArray[i].lastIndexOf(";"));
-        completedTwo = true;
+      // finds end time
+      else if (icsArray[i].includes(courseEnd)) {
+        if (uni.includes("Laurier") || uni.includes("UofT") || uni.includes("Waterloo")) {
+          icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("T") + 1, icsArray[i].length);
+          completedOne = true;
+        }
+        else if (uni.includes("York")) {
+          icsArray[i] = yorkDuration(icsArray[i], startTime);
+          completedOne = true;
+        }
+          course++;
+        var endTime = icsArray[i];
       }
-      else if (uni.includes("UofT")) {
-        var uoftDate = uoftStart.slice(0, 4) + "-" + uoftStart.slice(4);
-        uoftDate = uoftDate.slice(0, 7) + "-" + uoftDate.slice(7);
-        uoftDate = uoftDate.slice(0, 13) + ":" + uoftDate.slice(13);
-        uoftDate = uoftDate.slice(0, 16) + ":" + uoftDate.slice(16);
-        uoftFrequency = new Date(uoftDate.trim());
-        icsArray[i] = weekdays[uoftFrequency.getDay()];
-        completedTwo = true;
+      // finds weekdays
+      else if (icsArray[i].includes(courseFrequency)) {
+        if (uni.includes("Laurier") || uni.includes("Waterloo")) {
+          icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf("=") + 1, icsArray[i].length);
+          completedTwo = true;
+        }
+        else if (uni.includes("York")) {
+          icsArray[i] = icsArray[i].substring(icsArray[i].lastIndexOf(";") - 2, icsArray[i].lastIndexOf(";"));
+          completedTwo = true;
+        }
+        else if (uni.includes("UofT")) {
+          var uoftDate = uoftStart.slice(0, 4) + "-" + uoftStart.slice(4);
+          uoftDate = uoftDate.slice(0, 7) + "-" + uoftDate.slice(7);
+          uoftDate = uoftDate.slice(0, 13) + ":" + uoftDate.slice(13);
+          uoftDate = uoftDate.slice(0, 16) + ":" + uoftDate.slice(16);
+          uoftFrequency = new Date(uoftDate.trim());
+          icsArray[i] = weekdays[uoftFrequency.getDay()];
+          completedTwo = true;
+        }
+          course++;
+        var weekday = icsArray[i];  
       }
-        course++;
-      var weekday = icsArray[i];  
-    }
     }
     // adds course to array if all information is gathered
     if (completedOne == true && completedTwo == true) {
@@ -348,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
     eventBackgroundColor: '#7967B3',
     headerToolbar: {
       left: '',
-      center: 'title',
+      center: '',
       right: ''
     },
     dayHeaderFormat: {

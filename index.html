@@ -3,7 +3,7 @@
 
 <head>
   <link rel="stylesheet" type="text/css" href="style.css" />
-  <title>RU3 - Every Plan Has a Story</title>
+  <title>University Break Finder</title>
   <link rel="icon" type="image/x-icon" href="images/Draft_3.png">
   <meta charset='utf-8' />
   <meta name="viewport" content="width=device-width, initial-scale=1" /> 
@@ -27,16 +27,15 @@
 
 <body>
   <script type="text/javascript" src="backend.js"> </script>
-    <h1>RU3 Break Finder</h1>
+    <h1>University Break Finder</h1>
     <body>Takes University calendar files and finds common break times</body>
     <h2>Instructions</h2>
     <ol>
       <li>Gather iCal files from your group</li>
       <li>Select the semester you'd like to search</li>
       <li>Upload the files via the "Choose Files" button</li>
-      <li>Click "Discover!", break times will appear in calendar below</li>
+      <li>Click "Find Breaks", break times will appear in calendar below</li>
     </ol>
-    <br>
     <label for="semester">Semester</label>
     <select name="semester" id="semester">
       <option value="fall">Fall</option>
@@ -46,10 +45,14 @@
       <!-- <p style="text-align:center;"> -->
         <input onchange="getFiles()" id="fileinput" type="file" accept=".ics" multiple>
         <br><br>
-        <button onclick="mainFunction()">Discover!</button>
+        <button onclick="mainFunction()">Find Breaks</button>
       <!-- </p> -->
     </div>
   </body>
+  <br><br>
+  <body>Created by <a href="https://github.com/jamesliangg">James Liang</a>, <a href="https://github.com/VincentTrung">Vincent Trung</a>, <a href="https://github.com/dan-the-man1">Danny Yang</a>, and Winni Cheng for Hack the Valley 7.
+  <br>
+  <body>Read the source code on <a href="https://github.com/jamesliangg/Hack-the-Valley-7-OnlyFriends/tree/basic_html">Github</a></body>
 
   <body>
     <div class="calendar_background">
